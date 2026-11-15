@@ -2,10 +2,6 @@
 pipeline {
     agent any
 
-    options {
-        timestamps()
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -13,13 +9,13 @@ pipeline {
             }
         }
 
-        stage('Build and Test') {
+        stage('Test') {
             steps {
                 bat '.\\mvnw.cmd clean test'
             }
         }
 
-        stage('Package') {
+        stage('Build') {
             steps {
                 bat '.\\mvnw.cmd package -DskipTests'
             }
@@ -29,12 +25,12 @@ pipeline {
     post {
         always {
             junit allowEmptyResults: true,
-                  testResults: 'target/surefire-reports/*.xml'
+            testResults: 'target/surefire-reports/*.xml'
         }
 
         success {
             archiveArtifacts artifacts: 'target/*.jar',
-                             fingerprint: true
+            fingerprint: true
         }
     }
 }
