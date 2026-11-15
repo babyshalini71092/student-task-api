@@ -1,0 +1,9 @@
+---
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: Restart student task API
+  systemd:
+    name: student-task-api
+    state: restarted

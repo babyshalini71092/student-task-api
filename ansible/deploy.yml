@@ -1,0 +1,10 @@
+---
+- name: Deploy Student Task API
+  hosts: app_servers
+  become: yes
+
+  vars_files:
+    - student-task-api/vars/main.yml
+
+  roles:
+    - student-task-api
